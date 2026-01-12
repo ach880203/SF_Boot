@@ -36,4 +36,74 @@ class MemberMapperTest {
 
         list.forEach (m -> log.info(m));
     }
+
+    @Test
+    @DisplayName("create: member insert 테스트")
+    public void insertTest(){
+        //given
+        MemberDTO memberDTO = MemberDTO.builder()
+                .name("모모")
+                .age(4)
+                .address("서초구")
+                .phone("010-5555-4444")
+                .build();
+        //when
+        int result = memberMapper.insert(memberDTO);
+
+        //then
+
+        assertEquals(1, result);
+        assertNotNull(memberDTO.getMemberId());
+    }
+
+    @Test
+    @DisplayName("READ: member findById 테스트")
+    public  void  findByIdTest(){
+        //given
+        int memberId = 2;
+
+        //when
+        MemberDTO memberDTO = memberMapper.findById(memberId);
+
+        //then
+        assertNotNull(memberDTO);
+        log.info(memberDTO);
+    }
+
+    @Test
+    @DisplayName("UPDATE: member update 테스트")
+    public void updateTest(){
+        //give
+        MemberDTO memberDTO = memberMapper.findById(1);
+
+        //when
+        memberDTO.setName("수정");
+        memberDTO.setAge(7);
+
+        int updated = memberMapper.update(memberDTO);
+
+        //then
+        assertEquals(1, updated);
+        MemberDTO found = memberMapper.findById(1);
+
+        assertEquals("수정", found.getName());
+        assertEquals(7, found.getAge());
+
+    }
+
+    @Test
+    @DisplayName("DELETE : member delete test")
+    public void deleteTest(){
+        //give
+        MemberDTO memberDTO = memberMapper.findById(1);
+
+        //when
+        int result = memberMapper.delete(memberDTO.getMemberId());
+
+        //then
+        assertEquals(1, result);
+        MemberDTO found = memberMapper.findById(memberDTO.getMemberId());
+
+        assertNull(found);
+    }
 }

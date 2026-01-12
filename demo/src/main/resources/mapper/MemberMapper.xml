@@ -10,4 +10,27 @@
         order by member_id desc;
     </select>
 
+    <insert id="insert" parameterType="MemberDTO"
+            useGeneratedKeys="true" keyProperty="memberId">
+            insert into member(name, age, address, phone)
+            values(#{name}, #{age}, #{address}, #{phone})
+    </insert>
+
+    <select id="findById" resultType="MemberDTO">
+        select member_id, name, age, address, phone
+        from member
+        where member_id = #{memberId}
+    </select>
+
+    <update id="update" parameterType="MemberDTO">
+        update member
+        set name= #{name} , age= #{age}, address=#{address}, phone=#{phone}
+        where member_id = #{memberId}
+    </update>
+
+    <delete id="delete">
+        delete from member
+        where member_id = #{memberId}
+    </delete>
+
 </mapper>

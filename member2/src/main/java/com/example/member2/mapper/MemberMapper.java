@@ -1,6 +1,6 @@
-package com.example.demo.mapper;
+package com.example.member2.mapper;
 
-import com.example.demo.domain.MemberDTO;
+import com.example.member2.domain.MemberDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -12,11 +12,6 @@ public interface MemberMapper {
 
     MemberDTO findById(int memberId);
 
-    List<MemberDTO> findAll();
-
-    int update(MemberDTO memberDTO);
-
-    int delete(int memberId);
-
+    List<MemberDTO>findAll();
 
 }
