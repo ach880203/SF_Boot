@@ -1,18 +1,17 @@
-package com.example.jpa.domain;
+package com.example.jpa2.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
 
-
-@Getter
 @Setter
+@Getter
 @Entity
-@Table(name = "member")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Table(name = "member2")
 @ToString
-public class Member {
+public class Member2 {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,7 +21,8 @@ public class Member {
     @Column(nullable = false, length = 50)
     private String name;
     private int age;
-    @Column(nullable = false, length = 200)
     private String address;
+
+    @Column(nullable = false, length = 13)
     private String phone;
 }

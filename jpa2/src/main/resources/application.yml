@@ -3,7 +3,7 @@
 
   spring:
     application:
-      name: jpa
+      name: jpa2
     datasource:
       driver-class-name: com.mysql.cj.jdbc.Driver
       url: jdbc:mysql://localhost:3306/springdb?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
@@ -11,7 +11,7 @@
       password: 1234
     jpa:
       hibernate:
-        ddl-auto: update #???(create/ update / none ? ???)
+        ddl-auto: update
       show-sql: true
       properties:
         hibernate:
