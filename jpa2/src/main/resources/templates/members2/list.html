@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>Member2 List</title>
+  <style>
+    body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; background:#f6f7fb; margin:0; padding:24px; color:#222; }
+    .container { max-width: 980px; margin: 0 auto; }
+    .card { background:#fff; border:1px solid #e6e8ef; border-radius:14px; box-shadow:0 8px 18px rgba(0,0,0,0.06); padding:18px; }
+    .header { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+    h2 { margin:0; font-size:20px; }
+    .sub { margin-top:6px; color:#6b7280; font-size:13px; }
+
+    .btn { display:inline-flex; align-items:center; gap:8px; padding:10px 12px; border-radius:10px; text-decoration:none; font-size:14px; border:1px solid transparent; cursor:pointer; }
+    .btn-primary { background:#2563eb; color:#fff; }
+    .btn-primary:hover { filter: brightness(0.95); }
+    .btn-ghost { background:#fff; color:#2563eb; border-color:#cfe0ff; }
+    .btn-ghost:hover { background:#f1f6ff; }
+
+    table { width:100%; border-collapse: collapse; margin-top:14px; overflow:hidden; border-radius:12px; }
+    thead th { background:#f3f4f6; text-align:left; padding:12px; font-size:13px; color:#374151; border-bottom:1px solid #e5e7eb; }
+    tbody td { padding:12px; border-bottom:1px solid #eef0f4; font-size:14px; }
+    tbody tr:hover { background:#fafbff; }
+    .muted { color:#6b7280; font-size:13px; }
+    .empty { text-align:center; padding:26px 12px; color:#6b7280; }
+    .badge { display:inline-block; padding:3px 8px; border-radius:999px; background:#eef2ff; color:#3730a3; font-size:12px; }
+    .btn-sm { padding:8px 10px; font-size:13px; border-radius:10px; }
+    .btn-edit { background:#fbbf24; color:#111827; border:1px solid #f59e0b; }
+    .btn-edit:hover { filter: brightness(0.97); }
+
+    .btn-delete { background:#ef4444; color:#fff; border:1px solid #dc2626; margin-left:6px; }
+    .btn-delete:hover { filter: brightness(0.97); }
+
+    /* --- Pagination --- */
+    .pagination-wrap {
+      margin-top: 18px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .pagination {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      background: #fff;
+      border: 1px solid #e6e8ef;
+      border-radius: 999px; /* 동글동글 */
+      box-shadow: 0 8px 18px rgba(0,0,0,0.06);
+    }
+
+    .page-btn, .page-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 40px;
+      height: 36px;
+      padding: 0 12px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-size: 14px;
+      border: 1px solid #e5e7eb;
+      background: #fff;
+      color: #111827;
+      transition: transform .06s ease, filter .15s ease, background .15s ease;
+      user-select: none;
+    }
+
+    .page-btn:hover, .page-num:hover {
+      background: #f3f4f6;
+    }
+
+    .page-btn:active, .page-num:active {
+      transform: translateY(1px);
+    }
+
+    /* 현재 페이지 */
+    .page-num.active {
+      background: #2563eb;
+      color: #fff;
+      border-color: #2563eb;
+      font-weight: 700;
+    }
+
+    /* 이전/다음 버튼 */
+    .page-btn {
+      border-color: #cfe0ff;
+      color: #2563eb;
+      font-weight: 600;
+    }
+
+    /* 비활성(없을 때 숨기지 않고 회색처리 하고 싶으면 쓸 수 있음) */
+    .page-btn.disabled {
+      pointer-events: none;
+      opacity: .45;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="card">
+    <div class="header">
+      <div>
+        <h2>👥 Member2 목록</h2>
+        <div class="sub">등록/조회 흐름을 먼저 굳혀놓고, 다음에 수정·삭제·페이징을 붙일 거야.</div>
+      </div>
+      <a class="btn btn-primary" th:href="@{/members2/new}">+ 신규 등록</a>
+    </div>
+
+    <table>
+      <thead>
+      <tr>
+        <th style="width:90px;">ID</th>
+        <th>이름</th>
+        <th style="width:90px;">나이</th>
+        <th>주소</th>
+        <th style="width:160px;">전화번호</th>
+        <th style="width:160px;">관리</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="m : ${member2List}">
+        <td><span class="badge" th:text="${m.memberId}">1</span></td>
+        <td th:text="${m.name}">홍길동</td>
+        <td th:text="${m.age}">20</td>
+        <td th:text="${m.address}">서울</td>
+        <td th:text="${m.phone}">010</td>
+
+        <td>
+          <a class="btn btn-sm btn-edit"
+             th:href="@{/members2/edit/{id}(id=${m.memberId})}">수정</a>
+
+          <a class="btn btn-sm btn-delete"
+             th:href="@{/members2/delete/{id}(id=${m.memberId})}"
+             onclick="return confirm('정말 삭제하시겠습니까?')">삭제</a>
+        </td>
+
+      </tr>
+
+      <tr th:if="${#lists.isEmpty(member2List)}">
+        <td class="empty" colspan="5">
+          아직 회원이 없네? 😶‍🌫️<br>
+          <span class="muted">오른쪽 위 “신규 등록” 버튼을 눌러 첫 데이터를 만들어보자.</span>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+    <div style="margin-top:12px;">
+      <a class="btn btn-ghost" th:href="@{/members2/new}">등록 화면으로</a>
+    </div>
+  </div>
+
+  <div class="pagination-wrap">
+    <div class="pagination">
+
+      <!-- 이전 -->
+      <a class="page-btn"
+         th:if="${page.hasPrevious()}"
+         th:href="@{/members2/list(page=${page.number-1}, size=${page.size})}">
+        ←
+      </a>
+
+      <!-- 페이지 번호 -->
+      <span th:each="idx : ${#numbers.sequence(0, page.totalPages-1)}">
+      <a class="page-num"
+         th:href="@{/members2/list(page=${idx}, size=${page.size})}"
+         th:text="${idx + 1}"
+         th:classappend="${idx == page.number} ? ' active' : ''">
+        1
+      </a>
+    </span>
+
+      <!-- 다음 -->
+      <a class="page-btn"
+         th:if="${page.hasNext()}"
+         th:href="@{/members2/list(page=${page.number+1}, size=${page.size})}">
+        →
+      </a>
+
+    </div>
+  </div>
+
+
+</div>
+</body>
+</html>

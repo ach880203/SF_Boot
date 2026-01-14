@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Member2 Edit</title>
+    <style>
+        body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; background:#f6f7fb; margin:0; padding:24px; color:#222; }
+        .container { max-width: 720px; margin: 0 auto; }
+        .card { background:#fff; border:1px solid #e6e8ef; border-radius:14px; box-shadow:0 8px 18px rgba(0,0,0,0.06); padding:18px; }
+
+        h2 { margin:0 0 8px; font-size:20px; }
+        .sub { color:#6b7280; font-size:13px; margin-bottom:14px; }
+
+        .grid { display:grid; grid-template-columns: 1fr 1fr; gap:12px; }
+        .field { display:flex; flex-direction:column; gap:6px; }
+        label { font-size:13px; color:#374151; }
+        input { border:1px solid #e5e7eb; border-radius:10px; padding:10px 12px; font-size:14px; outline:none; }
+        input:focus { border-color:#93c5fd; box-shadow:0 0 0 3px rgba(59,130,246,0.15); }
+
+        .full { grid-column: 1 / -1; }
+        .hint { font-size:12px; color:#6b7280; margin-top:2px; }
+
+        .actions { display:flex; gap:10px; justify-content:space-between; align-items:center; margin-top:14px; }
+        .right { display:flex; gap:10px; }
+        .btn { padding:10px 12px; border-radius:10px; font-size:14px; border:1px solid transparent; cursor:pointer; text-decoration:none; display:inline-flex; align-items:center; gap:8px; }
+        .btn-primary { background:#2563eb; color:#fff; }
+        .btn-primary:hover { filter: brightness(0.95); }
+        .btn-ghost { background:#fff; color:#374151; border-color:#e5e7eb; }
+        .btn-ghost:hover { background:#f3f4f6; }
+        .btn-danger { background:#ef4444; color:#fff; }
+        .btn-danger:hover { filter: brightness(0.95); }
+
+        .badge { display:inline-block; padding:3px 8px; border-radius:999px; background:#eef2ff; color:#3730a3; font-size:12px; }
+        .toprow { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:10px; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="card">
+
+        <div class="toprow">
+            <div>
+                <h2>✏️ Member2 수정</h2>
+                <div class="sub">필드를 수정하고 저장하면 반영돼. (ID는 변경 불가)</div>
+            </div>
+            <span class="badge">
+                ID: <span th:text="${member2.memberId}">1</span>
+            </span>
+        </div>
+
+        <!-- member2 객체를 모델로 받아온다는 전제 -->
+        <form th:action="@{/members2/edit/{id}(id=${member2.memberId})}" method="post">
+
+            <!-- ID를 서버로 같이 보내고 싶으면 hidden으로 유지 (권장) -->
+            <input type="hidden" name="memberId" th:value="${member2.memberId}">
+
+            <div class="grid">
+                <div class="field">
+                    <label>이름 <span style="color:#ef4444;">*</span></label>
+                    <input type="text" name="name" th:value="${member2.name}" required>
+                </div>
+
+                <div class="field">
+                    <label>나이</label>
+                    <input type="number" name="age" min="0" th:value="${member2.age}">
+                    <div class="hint">0 이상 숫자로 입력</div>
+                </div>
+
+                <div class="field full">
+                    <label>주소 <span style="color:#ef4444;">*</span></label>
+                    <input type="text" name="address" th:value="${member2.address}" required>
+                </div>
+
+                <div class="field full">
+                    <label>전화번호</label>
+                    <input type="text" name="phone" th:value="${member2.phone}" placeholder="예: 010-1234-5678">
+                </div>
+            </div>
+
+            <div class="actions">
+                <a class="btn btn-ghost" th:href="@{/members2/list}">← 목록</a>
+
+                <div class="right">
+                    <!-- 삭제 버튼(UI만, 라우팅은 다음 단계에서 붙이자) -->
+                    <a class="btn btn-danger"
+                       th:href="@{/members2/delete/{id}(id=${member2.memberId})}"
+                       onclick="return confirm('정말 삭제하시겠습니까?')">
+                        삭제
+                    </a>
+
+                    <button class="btn btn-primary" type="submit">저장하기</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+</body>
+</html>

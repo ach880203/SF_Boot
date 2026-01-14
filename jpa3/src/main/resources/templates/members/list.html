@@ -54,36 +54,21 @@
     </table>
 </div>
 
-<div class="pagination-wrap">
-    <div class="pagination">
+<div style="margin-top: 20px; text-align: center">
+    <a th:href="@{/members/list(page=${page.number-1})}"
+       th:if="${page.hasPrevious()}" style="margin-right: 10px;  text-decoration:none;">[이전]</a>
 
-        <!-- 이전 -->
-        <a class="page-btn"
-           th:if="${page.hasPrevious()}"
-           th:href="@{/members2/list(page=${page.number-1}, size=${page.size})}">
-            ←
-        </a>
-
-        <!-- 페이지 번호 -->
-        <span th:each="idx : ${#numbers.sequence(0, page.totalPages-1)}">
-      <a class="page-num"
-         th:href="@{/members2/list(page=${idx}, size=${page.size})}"
-         th:text="${idx + 1}"
-         th:classappend="${idx == page.number} ? ' active' : ''">
-        1
-      </a>
+    <!-- ${#numbers.sequence(시작,끝) -> 시작, 끝 반복 -->
+    <span th:each="idx : ${#numbers.sequence(0, page.totalPages-1)}">
+        <a th:href="@{/members/list(page=${idx})}"
+           th:text="${idx +1 }"
+           th:style="${idx == page.number} ? 'font-weight:bold; color:blue; text-decoration:none;' : 'text-decoration:none; color:black' "
+           style="margin: 0 5px;"></a>
     </span>
 
-        <!-- 다음 -->
-        <a class="page-btn"
-           th:if="${page.hasNext()}"
-           th:href="@{/members2/list(page=${page.number+1}, size=${page.size})}">
-            →
-        </a>
-
-    </div>
+    <a th:href="@{/members/list(page=${page.number+1})}"
+       th:if="${page.hasNext()}" style="margin-left: 10px; text-decoration:none;">[다음]</a>
 </div>
-
 
 </body>
 </html>
