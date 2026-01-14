@@ -18,5 +18,4 @@ public interface MemberMapper {
 
     int delete(int memberId);
 
-
 }

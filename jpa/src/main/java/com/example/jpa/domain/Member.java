@@ -3,13 +3,12 @@ package com.example.jpa.domain;
 import jakarta.persistence.*;
 import lombok.*;
 
-
 @Getter
 @Setter
 @Entity
 @Table(name = "member")
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
 @ToString
 public class Member {
@@ -22,6 +21,7 @@ public class Member {
     @Column(nullable = false, length = 50)
     private String name;
     private int age;
+
     @Column(nullable = false, length = 200)
     private String address;
     private String phone;

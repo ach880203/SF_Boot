@@ -13,43 +13,39 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-//@Transactional //테스트 종료후 롤백 시키는 주문
 @SpringBootTest
 @Log4j2
+//@Transactional //테스트 종료 후 rollback
 class MemberMapperTest {
 
     @Autowired
     private MemberMapper memberMapper;
 
     @Test
-    @DisplayName("All READ: 전체 데이타 조회")
+    @DisplayName("ALL READ: 전체 데이타 조회")
     void findAll() {
-        //이 상황에서  -> 이런 행동을 하면 -> 이런결과가 나와야한다.
+        // 이 상항에서 -> 이런 행동을하면 -> 이런 결과가 나와야한다.
 
         //given -> 테스트에 필요한 모든 조건을 만드는 단계
-
-        //when -> 테스트 대상 동작 실행(실제로 검증하고 싶은 행동르 수행하는 단계)
+        //when -> 테스트 대상 동작 실행(실제로 검증하고 싶은 행동을 수행하는 단계)
         List<MemberDTO> list = memberMapper.findAll();
-
         //then -> 검증 결과 단계
-        Assertions.assertNotNull(list);
-
-        list.forEach (m -> log.info(m));
+        Assertions.assertNotNull(list);  //null만 아니면 OK
+        list.forEach( m -> log.info(m));
     }
 
     @Test
-    @DisplayName("create: member insert 테스트")
-    public void insertTest(){
+    @DisplayName("Create: member insert 테스트")
+    public void inssertTest(){
         //given
-        MemberDTO memberDTO = MemberDTO.builder()
-                .name("모모")
-                .age(4)
-                .address("서초구")
-                .phone("010-5555-4444")
-                .build();
+            MemberDTO memberDTO = MemberDTO.builder()
+                    .name("강산")
+                    .age(6)
+                    .address("강남구")
+                    .phone("000-1111-2222")
+                    .build();
         //when
-        int result = memberMapper.insert(memberDTO);
-
+            int result = memberMapper.insert(memberDTO);
         //then
 
         assertEquals(1, result);
@@ -58,13 +54,11 @@ class MemberMapperTest {
 
     @Test
     @DisplayName("READ: member findById 테스트")
-    public  void  findByIdTest(){
+    public void findByIdTest(){
         //given
-        int memberId = 2;
-
+        int memberId = 1;
         //when
         MemberDTO memberDTO = memberMapper.findById(memberId);
-
         //then
         assertNotNull(memberDTO);
         log.info(memberDTO);
@@ -73,32 +67,29 @@ class MemberMapperTest {
     @Test
     @DisplayName("UPDATE: member update 테스트")
     public void updateTest(){
-        //give
-        MemberDTO memberDTO = memberMapper.findById(1);
-
-        //when
+        //given
+        MemberDTO memberDTO =
+                memberMapper.findById(1);
         memberDTO.setName("수정");
-        memberDTO.setAge(7);
-
+        memberDTO.setAge(5);
+        //when
         int updated = memberMapper.update(memberDTO);
 
         //then
-        assertEquals(1, updated);
-        MemberDTO found = memberMapper.findById(1);
+       assertEquals(1, updated);
+       MemberDTO  found = memberMapper.findById(1);
 
-        assertEquals("수정", found.getName());
-        assertEquals(7, found.getAge());
-
+       assertEquals("수정", found.getName());
+       assertEquals(5, found.getAge());
     }
 
     @Test
-    @DisplayName("DELETE : member delete test")
+    @DisplayName("DELETE: member delete 테스트" )
     public void deleteTest(){
-        //give
-        MemberDTO memberDTO = memberMapper.findById(1);
-
+        //given
+        MemberDTO memberDTO  = memberMapper.findById(1);
         //when
-        int result = memberMapper.delete(memberDTO.getMemberId());
+         int result= memberMapper.delete(memberDTO.getMemberId());
 
         //then
         assertEquals(1, result);

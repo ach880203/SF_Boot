@@ -5,35 +5,31 @@
     <title>Title</title>
 </head>
 <body>
-<table border="1">
-    <tr>
-        <th>ID</th>
-        <th>NAME</th>
-        <th>AGE</th>
-        <th>ADDRESS</th>
-        <th>PHONE</th>
-        <th>관리</th>
-    </tr>
-    <tr th:each="member : ${list}">
-        <td th:text="${member.memberId}">1</td>
-        <td th:text="${member.name}">2</td>
-        <td th:text="${member.age}">3</td>
-        <td th:text="${member.address}">4</td>
-        <td th:text="${member.phone}">5</td>
-        <td>
-            <a th:href="@{/member/update/{id}(id=${member.memberId})}">
-                <button>수정</button>
-            </a>
-            <a th:href="@{/member/dlelete/{id}(id=${member.memberId})}"
-                    th:onclick="return confirm('정말 삭제하시겠습니까?')">
-                <button>삭제</button>
-            </a>
-        </td>
-    </tr>
-</table>
-<a th:href="@{/member/insert}">
-    <button>등록</button>
-</a>
-<br>
+  <table border="1">
+      <tr>
+          <th>ID</th>
+          <th>NAME</th>
+          <th>AGE</th>
+          <th>ADDRESS</th>
+          <th>PHONE</th>
+          <th>관리</th>
+      </tr>
+      <tr th:each="member : ${list}">
+          <td th:text="${member.memberId}">1</td>
+          <td th:text="${member.name}">2</td>
+          <td th:text="${member.age}">3</td>
+          <td th:text="${member.address}">4</td>
+          <td th:text="${member.phone}">5</td>
+          <td>
+              <a th:href="@{/member/update/{id}(id=${member.memberId})}">
+                <button type="button">수정</button>
+              </a>
+              <a th:href="@{/member/delete/{id}(id=${member.memberId})}"
+                        th:onclick="return confirm('정말 삭제하시겠습니까?')">
+                <button type="button">삭제</button>
+              </a>
+          </td>
+      </tr>
+  </table>
 </body>
 </html>

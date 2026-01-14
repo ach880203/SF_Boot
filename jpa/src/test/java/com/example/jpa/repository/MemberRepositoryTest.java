@@ -1,6 +1,5 @@
 package com.example.jpa.repository;
 
-
 import com.example.jpa.domain.Member;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
@@ -19,15 +18,16 @@ class MemberRepositoryTest {
     @Autowired
     private MemberRepository memberRepository;
 
+
     //추가
     @Test
     public void insertTest(){
 
         Member member = Member.builder()
-                .name("조이")
-                .age(4)
-                .phone("010-4412-3563")
-                .address("경상도")
+                .name("길동")
+                .age(2)
+                .phone("111")
+                .address("강동구")
                 .build();
 
         memberRepository.save(member);
@@ -39,10 +39,10 @@ class MemberRepositoryTest {
         Optional<Member> optMember = memberRepository.findById(1);
         Member member = optMember.get();
 
-        member.setName("강산");
+        member.setName("뽀양");
         member.setAge(7);
-        member.setAddress("서울시");
-
+        member.setAddress("천호동");
+        log.info("-------------------------------------------------");
         memberRepository.save(member);
     }
 
@@ -53,27 +53,40 @@ class MemberRepositoryTest {
         memberRepository.deleteById(1);
     }
 
-    //전체 데이터 조회
+    //전체데이타 조회
     @Test
     public void selectAll(){
         List<Member> memberList = memberRepository.findAll();
-        memberList.forEach(member -> log.info(member));
 
+        memberList.forEach(member->log.info(member));
     }
+
 
     //조회
     @Test
     public void selectTest(){
 
-        //Member member = memberRepository.findMemberByName("로미");
-        //Member member = memberRepository.findMemberByPhone("010-2222-3333");
-        //Member member = memberRepository.findByNameAndAddress("발칸", "경상도");
-        //List<Member> member = memberRepository.findMemberByAddress("경상도");
-        List<Member> member = memberRepository.findByAgeGreaterThanEqual(6);
+//        Member member = memberRepository.findMemberByName("까미");
+        List<Member> memberList =
+                memberRepository.findByAgeGreaterThanEqualOrderByAgeDesc(13);
 
-        member.forEach(member1 -> log.info(member));
-        log.info(member);
+        memberList.forEach(member->log.info(member));
+        log.info("--------------------------------------------");
+        log.info(memberList);
     }
 
+    @Test
+    public void likeTest(){
+        List<Member> memberList = memberRepository.findByAddressLike("%안산%");
+        memberList.forEach(member -> log.info(member));
+    }
+
+    @Test
+    public void orderAge(){
+        //List<Member> memberList = memberRepository.findByAddressOrderByAgeAsc("안산시");
+        List<Member> memberList = memberRepository.findByAgeOrederByDesc2(13);
+        memberList.forEach(member->log.info(member));
+
+    }
 
 }

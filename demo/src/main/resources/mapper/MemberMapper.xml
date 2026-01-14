@@ -3,17 +3,16 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.demo.mapper.MemberMapper">
-
-    <select id="findAll" resultType="com.example.demo.domain.MemberDTO">
+    <select id="findAll" resultType="MemberDTO">
         select member_id, name, age, address, phone
         from member
         order by member_id desc;
     </select>
 
     <insert id="insert" parameterType="MemberDTO"
-            useGeneratedKeys="true" keyProperty="memberId">
-            insert into member(name, age, address, phone)
-            values(#{name}, #{age}, #{address}, #{phone})
+        useGeneratedKeys="true" keyProperty="memberId">
+        insert into member(name,age,address, phone)
+        values(#{name}, #{age}, #{address}, #{phone})
     </insert>
 
     <select id="findById" resultType="MemberDTO">
@@ -24,7 +23,8 @@
 
     <update id="update" parameterType="MemberDTO">
         update member
-        set name= #{name} , age= #{age}, address=#{address}, phone=#{phone}
+        set name = #{name} , age = #{age},
+            address = #{address}, phone = #{phone}
         where member_id = #{memberId}
     </update>
 
@@ -32,5 +32,4 @@
         delete from member
         where member_id = #{memberId}
     </delete>
-
 </mapper>
