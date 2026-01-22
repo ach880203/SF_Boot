@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>회원 정보 수정</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; background-color: #f4f7f6; }
+        .container { max-width: 500px; margin: auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; background-color: #fff; }
+        input[readonly] { background-color: #eee; cursor: not-allowed; } /* ID는 수정 불가 표시 */
+        .btn-submit { width: 100%; padding: 12px; background-color: #ffc107; color: black; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; margin-top: 10px; font-weight: bold; }
+        .btn-submit:hover { background-color: #e0a800; }
+        .btn-back { display: block; text-align: center; margin-top: 15px; color: #666; text-decoration: none; font-size: 14px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>✏️ 회원 정보 수정</h2>
+    <form th:action="@{/members/edit/{id}(id=${member.memberId})}" th:object="${member}" method="post">
+
+        <div class="form-group">
+            <label>회원 번호 (ID)</label>
+            <input type="text" th:field="*{memberId}" readonly>
+        </div>
+
+        <div class="form-group">
+            <label for="name">이름</label>
+            <input type="text" th:field="*{name}" placeholder="이름을 입력하세요" required>
+        </div>
+
+        <div class="form-group">
+            <label for="age">나이</label>
+            <input type="number" th:field="*{age}" placeholder="나이를 입력하세요">
+        </div>
+
+        <div class="form-group">
+            <label for="address">주소</label>
+            <input type="text" th:field="*{address}" placeholder="주소를 입력하세요" required>
+        </div>
+
+        <div class="form-group">
+            <label for="phone">전화번호</label>
+            <input type="text" th:field="*{phone}" placeholder="010-0000-0000">
+        </div>
+
+        <button type="submit" class="btn-submit">수정 완료</button>
+        <a th:href="@{/members/list}" class="btn-back">취소하고 돌아가기</a>
+    </form>
+</div>
+
+</body>
+</html>
