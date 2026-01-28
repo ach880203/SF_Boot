@@ -8,15 +8,15 @@ import java.util.Optional;
 
 public class AuditorAwareImpl implements AuditorAware<String> {
     @Override
-    public Optional<String> getCurrentAuditor(){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    public Optional<String> getCurrentAuditor() {
+        Authentication authentication =
+                SecurityContextHolder.getContext().getAuthentication();
 
         String userId = "";
 
-        if(authentication != null) {
+        if (authentication != null) {
             userId = authentication.getName();
         }
-            return Optional.of(userId);
-
+        return Optional.of(userId);
     }
 }

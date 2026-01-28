@@ -4,18 +4,17 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.security.PrivateKey;
 import java.time.LocalDateTime;
 
 @Entity
-@Getter
 @Setter
+@Getter
 @Table(name = "order_item")
-public class OrderItem extends BaseEntity{
+public class OrderItem extends BaseEntity {
 
     @Id
-    @Column(name = "order_item_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "order_item_id")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -26,7 +25,7 @@ public class OrderItem extends BaseEntity{
     @JoinColumn(name = "item_id")
     private Item item;
 
-    private int orderPrice; //주문 가격
-    private int count;  // 주문 수량
+    private int orderPrice;  //주문 가격
+    private int count;    //수량
 
 }

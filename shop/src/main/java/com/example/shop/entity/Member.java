@@ -8,13 +8,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Entity
 @Table(name = "member")
-@Getter@Setter
+@Getter
+@Setter
 @ToString
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Member extends BaseEntity{
-
+public class Member extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_id")
@@ -31,15 +31,9 @@ public class Member extends BaseEntity{
     private Role role;
 
     //MemberDTO -> Member 변경(Service계층까지 전달받은 Dto를 Repository계층 Entity로 변경해서 전달)
-    public static Member createMember(MemberFormDto memberFormDto,
-                                      PasswordEncoder passwordEncoder){
+    public static Member createMember(MemberFormDto memberFormDto, PasswordEncoder passwordEncoder) {
 
-            return Member.builder()
-                    .name(memberFormDto.getName())
-                    .email(memberFormDto.getEmail())
-                    .password(passwordEncoder.encode(memberFormDto.getPassword())) //비밀 번호 암호화
-                    .address(memberFormDto.getAddress())
-                    .role(Role.ADMIN)
-                    .build();
+        return Member.builder().name(memberFormDto.getName()).email(memberFormDto.getEmail()).password(passwordEncoder.encode(memberFormDto.getPassword())) //비밀 번호 암호화
+                .address(memberFormDto.getAddress()).role(Role.ADMIN).build();
     }
 }

@@ -6,6 +6,7 @@ html {
 body {
     min-height: 100%;
 }
+/*
 .footer {
     position: absolute;
     left: 0;
@@ -15,6 +16,17 @@ body {
     padding: 15px 0;
     text-align: center;
 }
+*/
+.footer{
+    position: absolute;
+    /*bottom: 0;*/
+    width: 100%;
+    padding: 30px 0;
+    text-align: center;
+    background-color: #fcfcfc;
+    margin-top: auto;
+}
+
 .content{
     margin-bottom:100px;
     margin-top: 50px;

@@ -15,7 +15,7 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
-public class Order extends BaseEntity{
+public class Order extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,17 +26,12 @@ public class Order extends BaseEntity{
     @JoinColumn(name = "member_id")
     private Member member;
 
-    private LocalDateTime orderDate; //주문 일
+    private LocalDateTime orderDate; //주문일
 
     @Enumerated(EnumType.STRING)
-    private OrderStatus orderStatus; //주문 상태
+    private OrderStatus orderStatus;  //주문 상태
 
-
-    @OneToMany( mappedBy = "order",
-                                cascade = CascadeType.ALL,
-                                orphanRemoval = true,
-                                fetch = FetchType.LAZY)
-    private List<OrderItem> orderItem = new ArrayList<>();
-
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<OrderItem> orderItems = new ArrayList<>();
 
 }

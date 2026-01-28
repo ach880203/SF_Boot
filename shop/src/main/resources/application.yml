@@ -19,14 +19,18 @@ spring:
         format_sql: true
     database-platform: org.hibernate.dialect.MariaDBDialect
 
-    servlet:
-      multipart:
-        max-file-size: 20MB
-        max-request-size: 100MB
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 100MB
 
-        #상품 이미지 업로드 경로
-  itemImgLocation : c:/shop/item
+#상품 이미지 업로드 경로 - 파일이 저장되는 경로
+itemImgLocation: c:/shop/item
 
-        #리소스 업로드 경로
-  uploadPath: file:///c:/shop
+#리소스 업로드 경로 - 이미지 조회용 (브라우저)
+uploadPath: file:///c:/shop
+
+
+
+
 
